@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SistemaPaquetesCondominio.Models.Retiro>
+
+@{
+    ViewBag.Title = "Historial de retiros";
+}
+
+<h2>Historial de retiros</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Mensaje"]
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Registrar nuevo retiro", "Crear", "Retiro")
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Número de retiro</th>
+            <th>Número de paquete</th>
+            <th>Descripción del paquete</th>
+            <th>Residente</th>
+            <th>Persona que recibió</th>
+            <th>Fecha y hora del retiro</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var retiro in Model)
+        {
+            <tr>
+                <td>@retiro.RetiroId</td>
+                <td>@retiro.PaqueteId</td>
+                <td>@retiro.DescripcionPaquete</td>
+                <td>@retiro.NombreResidente</td>
+                <td>@retiro.RecibidoPor</td>
+                <td>@retiro.FechaHoraRetiro.ToString("dd/MM/yyyy HH:mm")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("Volver al inicio", "Index", "Home")
+</p>

@@ -1,0 +1,44 @@
+﻿@model SistemaPaquetesCondominio.Models.Retiro
+
+@{
+    ViewBag.Title = "Registrar retiro";
+}
+
+<h2>Registrar retiro de paquete</h2>
+
+@using (Html.BeginForm("Crear", "Retiro", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaqueteId, "Paquete")
+        @Html.DropDownListFor(
+            m => m.PaqueteId,
+            (SelectList)ViewBag.Paquetes,
+            "-- Selecciona un paquete --",
+            new { @class = "form-control" })
+        @Html.ValidationMessageFor(
+            m => m.PaqueteId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.RecibidoPor, "Persona que recibe el paquete")
+        @Html.TextBoxFor(
+            m => m.RecibidoPor,
+            new { @class = "form-control", placeholder = "Nombre completo" })
+        @Html.ValidationMessageFor(
+            m => m.RecibidoPor, "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Registrar retiro
+    </button>
+
+    @Html.ActionLink(
+        "Volver a retiros", "Index", "Retiro",
+        null, new { @class = "btn btn-default" })
+}

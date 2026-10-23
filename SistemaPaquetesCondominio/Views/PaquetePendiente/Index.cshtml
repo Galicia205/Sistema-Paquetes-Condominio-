@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SistemaPaquetesCondominio.Models.PaquetePendiente>
+
+@{
+    ViewBag.Title = "Paquetes pendientes";
+}
+
+<h2>Consulta de paquetes pendientes</h2>
+
+@using (Html.BeginForm("Index", "PaquetePendiente", FormMethod.Get))
+{
+    <div class="form-group">
+        <label for="nombreResidente">Nombre del residente</label>
+
+        <input type="text"
+               id="nombreResidente"
+               name="nombreResidente"
+               value="@ViewBag.NombreResidente"
+               class="form-control"
+               placeholder="Escribe el nombre del residente" />
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Buscar paquetes
+    </button>
+}
+
+<hr />
+
+@if (!string.IsNullOrWhiteSpace(
+    ViewBag.NombreResidente as string))
+{
+    <h3>Resultados de la búsqueda</h3>
+
+    if (Model.Any())
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Número de paquete</th>
+                    <th>Descripción</th>
+                    <th>Residente</th>
+                    <th>Vivienda</th>
+                    <th>Fecha y hora de recepción</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var paquete in Model)
+                {
+                    <tr>
+                        <td>@paquete.PaqueteId</td>
+                        <td>@paquete.Descripcion</td>
+                        <td>@paquete.NombreResidente</td>
+                        <td>@paquete.NumeroVivienda</td>
+                        <td>
+                            @paquete.FechaHoraRecepcion.ToString(
+                                "dd/MM/yyyy HH:mm")
+                        </td>
+                        <td>@paquete.Estado</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No se encontraron paquetes pendientes para ese residente.</p>
+    }
+}
+
+<p>
+    @Html.ActionLink("Volver al inicio", "Index", "Home")
+</p>

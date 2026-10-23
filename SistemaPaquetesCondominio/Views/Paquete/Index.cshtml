@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SistemaPaquetesCondominio.Models.Paquete>
+
+@{
+    ViewBag.Title = "Paquetes registrados";
+}
+
+<h2>Paquetes registrados</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["Mensaje"]
+    </div>
+}
+
+<p>
+    @Html.ActionLink("Registrar nuevo paquete", "Crear")
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Número</th>
+            <th>Descripción</th>
+            <th>Residente</th>
+            <th>Fecha y hora de recepción</th>
+            <th>Registrado por</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var paquete in Model)
+        {
+            <tr>
+                <td>@paquete.PaqueteId</td>
+                <td>@paquete.Descripcion</td>
+                <td>@paquete.NombreResidente</td>
+                <td>@paquete.FechaHoraRecepcion.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@paquete.RegistradoPor</td>
+                <td>@paquete.Estado</td>
+                <td>
+                    @if (paquete.Estado == "Recibido")
+                    {
+                        using (Html.BeginForm(
+                            "Notificar",
+                            "Paquete",
+                            new { id = paquete.PaqueteId },
+                            FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit"
+                                    class="btn btn-warning btn-sm">
+                                Marcar como notificado
+                            </button>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("Volver al inicio", "Index", "Home")
+</p>

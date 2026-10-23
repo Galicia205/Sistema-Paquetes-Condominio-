@@ -1,0 +1,33 @@
+﻿@model IEnumerable<SistemaPaquetesCondominio.Models.Residente>
+
+@{
+    ViewBag.Title = "Residentes";
+}
+
+<h2>Residentes registrados</h2>
+
+<p>
+    @Html.ActionLink("Registrar nuevo residente", "Crear")
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Vivienda</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var residente in Model)
+        {
+            <tr>
+                <td>@residente.Nombre</td>
+                <td>@residente.Telefono</td>
+                <td>@residente.Correo</td>
+                <td>@residente.NumeroVivienda</td>
+            </tr>
+        }
+    </tbody>
+</table>
